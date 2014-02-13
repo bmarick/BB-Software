@@ -13,7 +13,11 @@ int main(int argc, char **argv){
 	char line[MAX_LINE];
 	int pipe;
 
-	// open pipe
+	printf("\tEnsuring the Pipe exists\n");
+	if(access("./testPipe",F_OK)!=0)
+		mkfifo("testPipe", S_IRWXU);
+	
+	printf("\tOpening the pipe\n");
 	pipe = open("./testPipe", O_WRONLY, O_NONBLOCK);
 
 	int r = 0;
@@ -25,7 +29,7 @@ int main(int argc, char **argv){
 		// send line to the pipe
 		r = write(pipe, line, strlen(line));
 
-		if(strncmp(line,"quite",5) == 0) break;
+		if(strncmp(line,"quit",4) == 0) break;
 
 		memset(line,0,r);
 	}
