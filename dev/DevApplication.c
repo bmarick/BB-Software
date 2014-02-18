@@ -18,10 +18,11 @@ int main(int argc, char *argv[]){
 		printf("\nWelcome to the Grad Soils Lab Block Testing!\n");
 		printf("\nPlease choose from the following sections ");
 		printf("to run a test\n");
-		printf("\t %d)  Check State\n", TEST_CHECK);
 		printf("\t %d)  Set State, need root permisions\n", TEST_SET);
 		printf("\t %d)  Save State\n", TEST_SAVE);
 		printf("\t %d)  Read File\n", TEST_F_READ);
+		printf("\t %d)  Read Pipe\n", TEST_PIPE);
+		printf("\t %d)  Read Socket\n", TEST_SOCKET);
 		printf("\t %d)  QUIT TESTING\n", TEST_EXIT);
 		printf("Please enter the number or the test: ");
 		result = scanf("%d", &select);
@@ -30,14 +31,16 @@ int main(int argc, char *argv[]){
 				select >= TEST_MIN_VALUE && 
 				select <= TEST_MAX_VALUE ){
 			count_break = 0;
-			if (select == TEST_CHECK) {
-				State_Check(); 
-			} else if (select == TEST_SET) {
+			if (select == TEST_SET) {
 				State_Set();
 			} else if (select == TEST_SAVE) {
 				State_Save();
 			} else if (select == TEST_F_READ) {
 				State_Read();
+			} else if (select == TEST_PIPE) {
+				State_Pipe();
+			} else if (select == TEST_SOCKET) {
+				State_Socket();
 			} else if (select == TEST_EXIT) {
 				break;
 			}
@@ -56,8 +59,8 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
-int State_Check(){
-	printf("In STATE_CHECK\n");
+int State_Pipe(){
+	printf("In STATE_PIPE\n");
 	int pipe; 
 	char line[MAX_LINE];
 	printf("\tEnsuring the Pipe exists\n");
@@ -91,13 +94,13 @@ int State_Check(){
 	return 1;
 }
 int State_Read(){
-	printf("In STATE_CHECK\n");
+	printf("In STATE_F_READ\n");
 	FILE *fp; 
 	char *line;
 	size_t line_size = 0;
 	ssize_t read_value = 0;
 	int i = 0;
-	printf("\tEnsuring the Pipe exists\n");
+	printf("\tEnsuring the File exists\n");
 	if(access("./testRead.txt",F_OK)!=0){
 		printf("\tERROR: FILE DOES NOT EXIST!\n");
 		printf("\tPlease create text file, testRead.txt.\n");
@@ -200,6 +203,34 @@ int State_Save(){
 	fp = fopen("HelloWorld.txt","w");
 	fprintf(fp,"Hello World");
 	fclose(fp);
+	printf("\tSUCCESSFUL\n");
+	sleep(3);
+	return 1;
+}
+int State_Socket(){
+	printf("IN STATE_SOCKET\n");
+	int sockfd,n;
+	struct sockaddr_in servaddr,cliaddr;
+	socklen_t len;
+	char mesg[MAX_LINE];
+	printf("\tCreating socket\n");
+	sockfd=socket(AF_INET,SOCK_DGRAM,0);
+	printf("\tSetting up the handler\n");
+	bzero(&servaddr,sizeof(servaddr));
+	servaddr.sin_family = AF_INET;
+	servaddr.sin_addr.s_addr=htonl(INADDR_ANY);
+	servaddr.sin_port=htons(PORT);
+	bind(sockfd,(struct sockaddr *)&servaddr,sizeof(servaddr));
+	printf("\tReading from socket\n");
+	while(true){
+		len = sizeof(cliaddr);
+		n = recvfrom(sockfd,mesg,MAX_LINE,0,(struct sockaddr *)&cliaddr,&len);
+		//sendto(sockfd,mesg,n,0,(struct sockaddr *)&cliaddr,sizeof(cliaddr));
+		mesg[n] = 0;
+		printf("Received the following:\n");
+		printf("%s\n",mesg);
+		if(strncmp(mesg,"quit",4) == 0) break;
+	}
 	printf("\tSUCCESSFUL\n");
 	sleep(3);
 	return 1;
