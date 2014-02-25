@@ -1,0 +1,7 @@
+echo BUILDING ALL FILES
+echo UDP_CLIENT
+gcc udp-client.c -o UDP_CLIENT
+echo PIPESEND
+gcc clientSender.c -o PipeSend 
+echo dev
+g++ -O2 -Wall DevApplication.c SimpleGPIO.cpp  -o dev
