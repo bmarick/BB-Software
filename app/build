@@ -1,0 +1,3 @@
+echo BUILDING ALL FILES
+echo dev
+g++ -O2 -Wall main.c SimpleGPIO.cpp helper.c -o app -Wno-write-strings
