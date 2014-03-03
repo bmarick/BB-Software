@@ -9,10 +9,20 @@
 int INPUT_ATTEMPT_INIT=0, INPUT_ATTEMPT_MAX=5;
 
 /* FUNCTIONS */
-void clearToEndOfLine(){
-	char ch;
-	ch = getchar();
-	while( ch != '\n' || ch != EOF )	ch = getchar();
+int userConfrim(){
+	char sel = 'Q';
+	int result;
+//	while(getchar() != '\n');
+	result = scanf(" %c",&sel);
+	if(result > 0 || result != EOF){
+		if (sel == 'y' || sel =='Y')
+			return 1;
+		else if( sel == 'n' || sel == 'N')
+			return -1;
+	}
+	println("You have supplied an invalid input.");
+	printf("Please enter your selection, agian: ");
+	return userConfrim();
 }
 
 int userInput(int min, int max){
@@ -22,9 +32,7 @@ int userInput(int min, int max){
 int userInputRecursive(int min, int max, int count){
 	int select, result; 
 
-	clearToEndOfLine();
-	result = scanf("%d",&select);
-//	fflush(stdin);
+	result = scanf(" %d",&select);
 	if((result > 0 || result != EOF) &&
 			select >= min    &&
 			select <= max){
@@ -37,28 +45,38 @@ int userInputRecursive(int min, int max, int count){
 		return -1; 
 }
 
-int userInputTime(){
-	int dd=0,hr=0,min=0,sec=0,result=0;
-	result = scanf("%d:%d:%d:%d",&dd,&hr,&min,&sec);
-	printf("\tRETURN VALUE: %d",result);
+int userInputTime(int *dd, int *hr, int *min, int *sec){
+	*dd=0;
+	*hr=0;
+	*min=0;
+	*sec=0;
+	int result=0;
+	result = scanf(" %d:%d:%d:%d",dd,hr,min,sec);
 	if(result == 4 || result != EOF){
-		if(dd==0 && hr==0 && min==0 && sec==0){
+		if(*dd==0 && *hr==0 && *min==0 && *sec==0){
 			println("\tNO TIMELIMIT");
+			return NULL;
 		} else {
 			println("\tTIMELIMIT");
-			time_t timer;
+			return 1;
+/*			time_t timer;
 			time(&timer);
-			printf("current time is: %s\n", ctime(&timer));
+			printf("start time is: %s\n", ctime(&timer));
 			struct tm temp_tm = *localtime(&timer);
-			temp_tm += sec;
-			temp_tm += min*60;
+			temp_tm.tm_sec += sec;
+			temp_tm.tm_sec += min*60;
+			temp_tm.tm_sec += hr*3600;
+			temp_tm.tm_sec += dd* 86400;
+			timer = mktime(&temp_tm);
+			printf("adjusted time is: %s\n", ctime(&timer));
+			*out = timer;
+			printf("adjusted time is: %s\n", ctime(out)); */
 		}
 	} else {
 		println("You have supplied an invalid input.");
 		printf("Please enter your selection, agian: ");
-		return userInputTime();
+		return userInputTime(dd,hr,min,sec);
 	}
-	return 0;
 }
 
 int userInputDef(int min, int max, int def){

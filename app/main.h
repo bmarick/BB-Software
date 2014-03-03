@@ -14,14 +14,18 @@
 // VARIABLES
 uint8_t	 TEST_DISP = 2, TEST_PRES = 1;
 uint8_t	 GEAR_LOW = 1, GEAR_HIGH = 6;
-uint8_t  TEST_SELECT, GEAR_SELECT; 
+uint8_t	 STATION_A = 1, STATION_B = 2;
+uint8_t  TEST_SELECT, GEAR_SELECT, STATION_SELECT; 
 uint16_t PRESSURE_MAX = 2000, PRESSURE_MIN = 0;
 uint16_t DISPLACEMENT_MAX = 1500, DISPLACEMENT_MIN = 0;
 uint16_t DISPLACEMENT_SEL, PRESSURE_SEL;
 	//TIME VALUES
-time_t	 TIME END;
+uint8_t	 TIME_LIMIT;
+int	 TIME_DAYS, TIME_HRS, TIME_MIN, TIME_SEC;
+time_t	 TIME_END;
 
 // FUNCTIONS
-int testInit();
+void testInit();
+int testConfirm();
 int testPressure();
 int testDisplacement();
