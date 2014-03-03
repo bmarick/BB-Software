@@ -25,7 +25,7 @@ int	 TIME_DAYS, TIME_HRS, TIME_MIN, TIME_SEC;
 time_t	 TIME_END;
 
 // FUNCTIONS
-void testInit();
 int testConfirm();
+void testInit();
 int testPressure();
 int testDisplacement();

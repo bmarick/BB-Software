@@ -8,11 +8,9 @@
 #include <string.h>
 
 //FUNCTIONS
-int userInput(int min, int max);
-int userInputRecursive(int min, int max,int count);
-int userInputDef(int min, int max, int def);
-int userInputTime(int *dd, int *hr, int *min, int *sec);
 int userConfrim();
+int userInputRange(int min, int max);
+int userInputTime(int *dd, int *hr, int *min, int *sec);
 //int userInputTime(time_t *out);
 
 	//INLINE
