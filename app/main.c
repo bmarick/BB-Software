@@ -39,6 +39,5 @@ int testInit(){
 	userInputTime();
 	// GEAR RATIO
 
-
 	return 0;
 }
