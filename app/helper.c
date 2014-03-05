@@ -7,7 +7,7 @@
 
 /* VARIABLES */
 int INPUT_ATTEMPT_INIT=0, INPUT_ATTEMPT_MAX=5;
-
+int SEC_PER_MIN = 60, SEC_PER_HR = 3600, SEC_PER_DAY = 84600;
 /* FUNCTIONS */
 	//RECURSIVE FUNCTIONS
 int userConfrimRecursive(int count){
@@ -49,31 +49,16 @@ int userInputTimeRecursive(int *dd, int *hr, int *min, int *sec, int count){
 	*dd=0;		*hr=0;		*min=0;		*sec=0;
 	int result=0;
 	result = scanf(" %d:%d:%d:%d",dd,hr,min,sec);
-	printf("\t\tRESULT: %d", result);
 	if(result == 4 && result != EOF){
-		if(*dd==0 && *hr==0 && *min==0 && *sec==0){
-			println("\tNO TIMELIMIT");
-			return NULL;
-		} else {
-			println("\tTIMELIMIT");
+		if(*dd==0 && *hr==0 && *min==0 && *sec==0)
+			return 0;
+		else
 			return 1;
-/*			time_t timer;
-			time(&timer);
-			printf("start time is: %s\n", ctime(&timer));
-			struct tm temp_tm = *localtime(&timer);
-			temp_tm.tm_sec += sec;
-			temp_tm.tm_sec += min*60;
-			temp_tm.tm_sec += hr*3600;
-			temp_tm.tm_sec += dd* 86400;
-			timer = mktime(&temp_tm);
-			printf("adjusted time is: %s\n", ctime(&timer));
-			*out = timer;
-			printf("adjusted time is: %s\n", ctime(out)); */
-		}
 	} else if (count == INPUT_ATTEMPT_MAX -1){
 		println("\t\tWARNING: YOU HAVE ONLY ONE MORE ATTEMPT!");
 	} else if (count >= INPUT_ATTEMPT_MAX){
 		*dd=0;		*hr=0;		*min=0;		*sec=0;
+		println("\t\tDEFAULTING TO NO TIME LIMIT");
 		return -1;
 	}
 	println("You have supplied an invalid input.");
@@ -82,6 +67,19 @@ int userInputTimeRecursive(int *dd, int *hr, int *min, int *sec, int count){
 }
 
 	//PUBLIC CALLS
+void testEndTime(int *dd, int *hr, int *min, int *sec, time_t *out){
+	time_t timer;
+	time(&timer);
+	printf("start time is: %s\n", ctime(&timer));
+	struct tm temp_tm = *localtime(&timer);
+	temp_tm.tm_sec += *sec;
+	temp_tm.tm_sec += *min * SEC_PER_MIN;
+	temp_tm.tm_sec += *hr * SEC_PER_HR;
+	temp_tm.tm_sec += *dd * SEC_PER_DAY;
+	timer = mktime(&temp_tm);
+	*out = timer;
+}
+
 int userConfrim(){
 	return userConfrimRecursive(INPUT_ATTEMPT_INIT);
 }

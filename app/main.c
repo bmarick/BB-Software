@@ -12,7 +12,9 @@ int main(int argc, char *argv[]){
 	
 	testInit();
 	while(testConfirm() < 0){ testInit(); }
-	
+		
+	testEndTime(&TIME_DAYS,&TIME_HRS,&TIME_MIN,&TIME_SEC,&TIME_END);
+	printf("TIME_END is: %s\n", ctime(&TIME_END));
 
 
 	return 0; 
@@ -61,7 +63,7 @@ int testConfirm(){
 		println("\tTest type: Displacement");
 		printf("\tDesired displacement: %d\n",PRESSURE_SEL);
 	}
-	if(TIME_LIMIT == NULL){ 
+	if(TIME_LIMIT <= 0){ 
 		println("\tTest length: NOT SET!");
 	} else  {
 		printf("\tTest length: %d days, %d hours, ",TIME_DAYS,TIME_HRS);

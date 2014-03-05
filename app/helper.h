@@ -8,10 +8,10 @@
 #include <string.h>
 
 //FUNCTIONS
+void testEndTime(int *dd, int *hr, int *min, int *sec, time_t *out);
 int userConfrim();
 int userInputRange(int min, int max);
 int userInputTime(int *dd, int *hr, int *min, int *sec);
-//int userInputTime(time_t *out);
 
 	//INLINE
 inline void println(char line[]){
