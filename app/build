@@ -1,4 +1,4 @@
 echo
 echo
 echo BUILDING APP
-g++ -O2 -Wall main.c SimpleGPIO.cpp helper.c -o app -Wno-write-strings
+g++ -O2 -Wall main.c SimpleGPIO.cpp helper.c DispTest.c socket.c -o app -Wno-write-strings

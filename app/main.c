@@ -16,7 +16,9 @@ int main(int argc, char *argv[]){
 	testEndTime(&TIME_DAYS,&TIME_HRS,&TIME_MIN,&TIME_SEC,&TIME_END);
 	printf("TIME_END is: %s\n", ctime(&TIME_END));
 
+	DisplacementTimedTest(&TIME_END,&DISPLACEMENT_SEL,&STATION_SELECT);	
 
+	
 	return 0; 
 }
 
@@ -41,9 +43,7 @@ void testInit(){
 	println("\nSetting the length of the test.");
 	println("Input format 'Days':'hours':'minutes':'sec'");
 	printf("Please enter desired test lenght: ");
-//	userInputTime(&TIME_END);
 	TIME_LIMIT = userInputTime(&TIME_DAYS,&TIME_HRS,&TIME_MIN,&TIME_SEC);
-//	printf("TIME_END is: %s\n", ctime(&TIME_END));
 	// SELECT TESTING STATION
 	println("\nSelect Testing Station.");
 	printf("Please enter desired testing station[%d-%d]: ",STATION_A,STATION_B);

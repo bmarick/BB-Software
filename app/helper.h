@@ -3,6 +3,10 @@
  * Created by: Brandon Marick 1/22/14
  */
 
+#ifndef HELPER_HEADER
+
+#define HELPER_HEADER
+
 #include <iostream>
 #include <stdio.h>
 #include <string.h>
@@ -18,3 +22,4 @@ inline void println(char line[]){
 	printf("%s\n",line);
 }
 
+#endif /* HELPER_HEADER */

@@ -4,6 +4,7 @@
  */
 
 #include "helper.h"
+#include "DispTest.h"
 #include "SimpleGPIO.h"
 
 #include <stdlib.h>
