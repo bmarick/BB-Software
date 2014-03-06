@@ -14,7 +14,6 @@ int main(int argc, char *argv[]){
 	while(testConfirm() < 0){ testInit(); }
 		
 	testEndTime(&TIME_DAYS,&TIME_HRS,&TIME_MIN,&TIME_SEC,&TIME_END);
-	printf("TIME_END is: %s\n", ctime(&TIME_END));
 
 	DisplacementTimedTest(&TIME_END,&DISPLACEMENT_SEL,&STATION_SELECT);	
 
@@ -71,6 +70,6 @@ int testConfirm(){
 	}
 	printf("\tTest Station: Station %d\n",STATION_SELECT);
 	printf("\tGear ration: %d\n",GEAR_SELECT);
-	printf("\nIs the above test information correct (y or n)?");
+	printf("\nIs the above test information correct (y or n)? ");
 	return userConfrim();
 }

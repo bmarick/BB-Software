@@ -7,9 +7,9 @@
 #include "DispTest.h"
 
 // VARIABLES
-struct sockaddr_in *SERVADDR;
-int *SOCKET_ID;
-int PORT_STATION_A = 3200, PORT_STATION_B = 3201;
+struct sockaddr_in SERVADDR;
+int SOCKET_ID = 0;
+int PORT_STATION_A = 32000, PORT_STATION_B = 32001;
 // MESSAGES
 int MAX_LINE = 80;
 
@@ -18,8 +18,7 @@ int DisplacementTimedTest(time_t *end, uint16_t *goal, uint8_t *station){
 	int current = 0, i = 0, result;
 	char msg[MAX_LINE];
 	
-	println("IN TEST");
-	if(socketOpen(SOCKET_ID, SERVADDR, PORT_STATION_A) != 0){
+	if(socketOpen(&SOCKET_ID, &SERVADDR, PORT_STATION_A) != 0){
 		println("\t\tERROR: setting up socket");
 		return -1;
 	}
@@ -37,9 +36,9 @@ int DisplacementTimedTest(time_t *end, uint16_t *goal, uint8_t *station){
 			break;
 		}
 
-		result = socketRead(SOCKET_ID, msg, &MAX_LINE);
+		result = socketRead(&SOCKET_ID, msg, &MAX_LINE);
 		if(result == -2){
-			socketClose(SOCKET_ID);
+			socketClose(&SOCKET_ID);
 			println("\t\tERROR: reading socket");
 			return -1;
 		}

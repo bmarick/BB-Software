@@ -23,20 +23,12 @@ int socketClose(int *sockId){
  */
 int socketOpen(int *sockId, struct sockaddr_in *servaddr, int port){
 	struct timeval timeOut;
-//	socklen_t len;
 	int result;
 	
-	printf("\t\tIN SOCKET OPEN()\n");
-	
 	result = socket(AF_INET, SOCK_DGRAM,0);
-	printf("\t\tAFTER SOCKET()\n");
-	printf("\t\tAFTER SOCKET()\n");
 	if(result == -1)	return -2;
-	else 			*sockId = result;
+	else			*sockId = result;
 
-	printf("\t\tAFTER SOCKET()\n");
-
-	printf("\t\tAFTER SOCKET()\n");
 	bzero(servaddr,sizeof(*servaddr));
 	(*servaddr).sin_family = AF_INET;
 	(*servaddr).sin_addr.s_addr=htonl(INADDR_ANY);
