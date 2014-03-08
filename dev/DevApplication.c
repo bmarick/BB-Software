@@ -23,6 +23,8 @@ int main(int argc, char *argv[]){
 		printf("\t %d)  Read File\n", TEST_F_READ);
 		printf("\t %d)  Read Pipe\n", TEST_PIPE);
 		printf("\t %d)  Read Socket\n", TEST_SOCKET);
+		printf("\t %d)  Send Control Signal to Relay, need root permissions\n", TEST_RELAY);
+		printf("\t %d)  Send Motor commands, need root permissions\n", TEST_MOTOR);
 		printf("\t %d)  QUIT TESTING\n", TEST_EXIT);
 		printf("Please enter the number or the test: ");
 		result = scanf("%d", &select);
@@ -41,6 +43,10 @@ int main(int argc, char *argv[]){
 				State_Pipe();
 			} else if (select == TEST_SOCKET) {
 				State_Socket();
+			} else if (select == TEST_RELAY ) {
+				State_Relay();
+			} else if (select == TEST_MOTOR) {
+				State_Motor();
 			} else if (select == TEST_EXIT) {
 				break;
 			}
@@ -59,6 +65,107 @@ int main(int argc, char *argv[]){
 	return 0;
 }
 
+int State_Motor(){
+	int result, select, i, count = 0, prev =0;
+	unsigned int *pins;
+	printf("Please select station [1-2]: ");
+	while(count <5){
+		result = scanf(" %d",&select);
+		if(result > 0 && result != EOF && select >= 1 && select <= 2){
+			break;
+		} else if (count == 4){
+			printf("\t\tWARNING: YOU HAVE ONLY 1 MORE ATTEMPT!\n");
+		} else if (count >= 5)
+			return -1;
+		printf("You have supplied an invalid input.\n");
+		printf("Please enter your selection, agian: ");
+		count++;
+	}
+	if(select == 1){
+		pins = GPIO_D1;
+	} else { 
+		pins = GPIO_D2;
+	}
+
+	for(i=0; i<GPIO_PIN_COUNT;i++){
+		printf("pins[%d] = %d\n",i,pins[i]);
+		gpio_export(GPIO_D1[i]);
+	      	gpio_set_dir(GPIO_D1[i], OUTPUT_PIN);
+	}
+
+	printf("Setting Motor to No Movement\n");
+        gpio_set_value(pins[0], HIGH);
+        gpio_set_value(pins[2], HIGH);
+        gpio_set_value(pins[4], HIGH);
+
+
+	while(true){
+		printf("Choose from the following motor commands, based on gear 1: \n");
+		printf("\t1) FORWARD\n\t2)NO MOTION\n\t3) REVERSE\n\4) QUITE\n");
+		printf("Please enter your selection: ");
+		count = 0;
+		while(count <5){
+			result = scanf(" %d",&select);
+			if(result > 0 && result != EOF && select >= 1 && select <= 4){
+				break;
+			} else if (count == 4){
+				printf("\t\tWARNING: YOU HAVE ONLY 1 MORE ATTEMPT!\n");
+			} else if (count >= 5)
+				return -1;
+			printf("You have supplied an invalid input.\n");
+			printf("Please enter your selection, agian: ");
+			count++;
+		}
+		if(select == 1){
+			if(prev != 2){ 
+				printf("Stopping motor for safety, ~3 sec delay\n");
+        			gpio_set_value(pins[1], LOW);
+			        gpio_set_value(pins[3], LOW);
+			        gpio_set_value(pins[5], LOW);
+				sleep(3);
+			}
+			prev = select;
+			printf("Setting motor in forward direction\n");
+        		gpio_set_value(pins[1], HIGH);
+		        gpio_set_value(pins[3], HIGH);
+		}else if(select == 2){
+			printf("Stopping motor\n");
+        		gpio_set_value(pins[1], LOW);
+			gpio_set_value(pins[3], LOW);
+			gpio_set_value(pins[5], LOW);
+		}else if(select == 3){
+			if(prev != 2){ 
+				printf("Stopping motor for safety, ~3 sec delay\n");
+        			gpio_set_value(pins[1], LOW);
+			        gpio_set_value(pins[3], LOW);
+			        gpio_set_value(pins[5], LOW);
+				sleep(3);
+			}
+			prev = select;	
+			printf("Setting motor in reverse direction\n");
+        		gpio_set_value(pins[1], HIGH);
+		        gpio_set_value(pins[5], HIGH);
+		}else 
+			break;
+	}
+
+	printf("\tReturning Pins to normal state\n");
+	gpio_set_value(pins[0], LOW);
+        gpio_set_value(pins[1], LOW);
+        gpio_set_value(pins[2], LOW);
+        gpio_set_value(pins[3], LOW);
+        gpio_set_value(pins[4], LOW);
+        gpio_set_value(pins[5], LOW);
+	for(i=0; i<GPIO_PIN_COUNT;i++){
+		gpio_unexport(pins[i]);
+		gpio_unexport(pins[i]);
+	}
+
+	
+	printf("\tSUCCESSFUL\n");
+	sleep(3);
+	return 1;
+}
 int State_Pipe(){
 	printf("In STATE_PIPE\n");
 	int pipe; 
@@ -118,7 +225,7 @@ int State_Read(){
 	}
 	printf("\tLine#\tChar#\tMessage\n");
 	while((read_value = getline(&line,&line_size,fp)) != -1){
-		printf("\t%d\t%d\t%s",i,line_size,line);
+		printf("\t%d\t%d\t%s",i,(int)line_size,line);
 		i++;
 	}
 	
@@ -128,6 +235,9 @@ int State_Read(){
 	printf("\tSUCCESSFUL\n");
 	sleep(3);
 	return 1;	
+}
+int State_Relay(){
+	return 0;
 }
 int State_Set(){
 	int i = 0;

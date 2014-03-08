@@ -30,8 +30,10 @@ int TEST_SAVE		= 2;
 int TEST_F_READ		= 3;
 int TEST_PIPE		= 4;
 int TEST_SOCKET		= 5; 
-int TEST_EXIT		= 6;
-int TEST_MAX_VALUE	= 6;
+int TEST_RELAY		= 6;
+int TEST_MOTOR		= 7;
+int TEST_EXIT		= 8;
+int TEST_MAX_VALUE	= 8;
 int TEST_MIN_VALUE	= 1;
 
 // PIN DEFINES
@@ -44,8 +46,10 @@ int MAX_LINE = 80;
 int PORT = 32000;
 
 // FUNCTION DEFINES
+int State_Motor();
 int State_Pipe();
 int State_Read();
 int State_Save();
 int State_Set();
 int State_Socket();
+int State_Relay();

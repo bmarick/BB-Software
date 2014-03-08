@@ -1,0 +1,2 @@
+echo BUILDING SERVER
+gcc udp-counter.c -o UDP_COUNTER

@@ -1,0 +1,2 @@
+echo BUILDING SERVER
+gcc udp-server.c -o UDP_SERVER
