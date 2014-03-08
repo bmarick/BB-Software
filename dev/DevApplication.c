@@ -68,6 +68,8 @@ int main(int argc, char *argv[]){
 int State_Motor(){
 	int result, select, i, count = 0, prev =0;
 	unsigned int *pins;
+	printf("In STATE_MOTOR\n");
+	printf("\tMUST HAVE ROOT PERMISSONS\n");
 	printf("Please select station [1-2]: ");
 	while(count <5){
 		result = scanf(" %d",&select);
@@ -88,7 +90,6 @@ int State_Motor(){
 	}
 
 	for(i=0; i<GPIO_PIN_COUNT;i++){
-		printf("pins[%d] = %d\n",i,pins[i]);
 		gpio_export(GPIO_D1[i]);
 	      	gpio_set_dir(GPIO_D1[i], OUTPUT_PIN);
 	}
@@ -101,7 +102,7 @@ int State_Motor(){
 
 	while(true){
 		printf("Choose from the following motor commands, based on gear 1: \n");
-		printf("\t1) FORWARD\n\t2)NO MOTION\n\t3) REVERSE\n\4) QUITE\n");
+		printf("\t1) FORWARD\n\t2)NO MOTION\n\t3) REVERSE\n\t4) QUITE\n");
 		printf("Please enter your selection: ");
 		count = 0;
 		while(count <5){
@@ -150,14 +151,8 @@ int State_Motor(){
 	}
 
 	printf("\tReturning Pins to normal state\n");
-	gpio_set_value(pins[0], LOW);
-        gpio_set_value(pins[1], LOW);
-        gpio_set_value(pins[2], LOW);
-        gpio_set_value(pins[3], LOW);
-        gpio_set_value(pins[4], LOW);
-        gpio_set_value(pins[5], LOW);
 	for(i=0; i<GPIO_PIN_COUNT;i++){
-		gpio_unexport(pins[i]);
+		gpio_set_value(pins[i], LOW);
 		gpio_unexport(pins[i]);
 	}
 
@@ -182,15 +177,12 @@ int State_Pipe(){
 	printf("Msg #\tChar #\tMessage\n");
 	int i = 1, r = 0;
 	while(1){
-		// memset(line,0,r));
 		r = read(pipe, line, MAX_LINE);
 
 		if(r != 0) printf("%d)\t%d,\t%s",i,r,line);
-
 		if(strncmp(line,"quit",4) == 0) break;
 
 		memset(line,0,r);
-
 		sleep(1);
 		i++;
 	}
@@ -237,6 +229,53 @@ int State_Read(){
 	return 1;	
 }
 int State_Relay(){
+	int result, select, count = 0;
+	unsigned int *pins;
+	printf("In STATE_RELAY\n");
+	printf("\tMUST HAVE ROOT PERMISSONS\n");
+	printf("Please select station [1-2]: ");
+	while(count <5){
+		result = scanf(" %d",&select);
+		if(result > 0 && result != EOF && select >= 1 && select <= 2){
+			break;
+		} else if (count == 4){
+			printf("\t\tWARNING: YOU HAVE ONLY 1 MORE ATTEMPT!\n");
+		} else if (count >= 5)
+			return -1;
+		printf("You have supplied an invalid input.\n");
+		printf("Please enter your selection, agian: ");
+		count++;
+	}
+	if(select == 1){
+		pins = GPIO_D1;
+	} else { 
+		pins = GPIO_D2;
+	}
+	printf("Please select relay [0-5]: ");
+	while(count <5){
+		result = scanf(" %d",&select);
+		if(result > 0 && result != EOF && select >= 0 && select <= 5){
+			break;
+		} else if (count == 4){
+			printf("\t\tWARNING: YOU HAVE ONLY 1 MORE ATTEMPT!\n");
+		} else if (count >= 5)
+			return -1;
+		printf("You have supplied an invalid input.\n");
+		printf("Please enter your selection, agian: ");
+		count++;
+	}
+	printf("Setting up pin\n");	
+	gpio_export(pins[select]);
+	gpio_set_dir(pins[select], OUTPUT_PIN);
+	printf("Setting pin high\n");	
+        gpio_set_value(pins[select], HIGH);
+	sleep(5);
+	printf("Returning to default state\n");	
+	gpio_set_value(pins[select], LOW);
+	gpio_unexport(pins[select]);
+	printf("\tSUCCESSFUL\n");
+	sleep(3);
+		
 	return 0;
 }
 int State_Set(){
