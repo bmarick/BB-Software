@@ -40,7 +40,7 @@ int socketOpen(int *sockId, struct sockaddr_in *servaddr, int port){
 		return -3;
 	}
 
-	timeOut.tv_sec = 10;
+	timeOut.tv_sec  = 1;
 	timeOut.tv_usec = 0;
 
 	if(setsockopt(*sockId,SOL_SOCKET,SO_RCVTIMEO,(char *)&timeOut,sizeof(timeOut)) < 0){
@@ -65,9 +65,7 @@ int socketRead(int *sockId, char *msg, int *length){
 	len = sizeof(cliaddr);
 	n = recvfrom(*sockId,msg,*length,0,(struct sockaddr *)&cliaddr,&len);
 	if(n>=0) {
-		msg[n] = 0;
-		printf("Received the following:\n");
-		printf("%s",msg);
+         	msg[n] = 0;
 		return n;
 	} else if (errno == EWOULDBLOCK  || errno == EAGAIN) {
 		printf("\t\ttimeout\n");

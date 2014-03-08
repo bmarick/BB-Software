@@ -10,7 +10,6 @@
 
 #include "socket.h"
 #include "helper.h"
-#include "testData.h"
 
 #include <stdint.h>
 #include <stdio.h>

@@ -5,14 +5,14 @@
  */
 
 #include "DispTest.h"
-/*
+
 // VARIABLES
 struct sockaddr_in SERVADDR;
 int SOCKET_ID = 0;
 int PORT_STATION_A = 32000, PORT_STATION_B = 32001;
 // MESSAGES
 int MAX_LINE = 80;
-*/
+
 int PressureTimedTest(time_t *end, uint16_t *goal, uint8_t *station){
 	time_t now;
 	int current = 0, i = 0, result;

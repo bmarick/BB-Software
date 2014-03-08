@@ -70,6 +70,7 @@ int userInputTimeRecursive(int *dd, int *hr, int *min, int *sec, int count){
 void testEndTime(int *dd, int *hr, int *min, int *sec, time_t *out){
 	time_t timer;
 	time(&timer);
+//	printf("\tStart time: %s\n",ctime(&timer));
 	struct tm temp_tm = *localtime(&timer);
 	temp_tm.tm_sec += *sec;
 	temp_tm.tm_sec += *min * SEC_PER_MIN;
@@ -77,6 +78,7 @@ void testEndTime(int *dd, int *hr, int *min, int *sec, time_t *out){
 	temp_tm.tm_sec += *dd * SEC_PER_DAY;
 	timer = mktime(&temp_tm);
 	*out = timer;
+//	printf("\tEnd   time: %s\n",ctime(&timer));
 }
 
 int userConfrim(){
