@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
 }
 
 int State_Motor(){
-	int result, select, i, count = 0, prev =0;
+	int result, select, i, count = 0, prev =2;
 	unsigned int *pins;
 	printf("In STATE_MOTOR\n");
 	printf("\tMUST HAVE ROOT PERMISSONS\n");
@@ -102,7 +102,7 @@ int State_Motor(){
 
 	while(true){
 		printf("Choose from the following motor commands, based on gear 1: \n");
-		printf("\t1) FORWARD\n\t2)NO MOTION\n\t3) REVERSE\n\t4) QUITE\n");
+		printf("\t1) FORWARD\n\t2) NO MOTION\n\t3) REVERSE\n\t4) QUIT\n");
 		printf("Please enter your selection: ");
 		count = 0;
 		while(count <5){
@@ -130,6 +130,7 @@ int State_Motor(){
         		gpio_set_value(pins[1], HIGH);
 		        gpio_set_value(pins[3], HIGH);
 		}else if(select == 2){
+			prev = select;
 			printf("Stopping motor\n");
         		gpio_set_value(pins[1], LOW);
 			gpio_set_value(pins[3], LOW);
