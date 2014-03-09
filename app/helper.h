@@ -14,7 +14,8 @@
 //FUNCTIONS
 void testEndTime(int *dd, int *hr, int *min, int *sec, time_t *out);
 int userConfrim();
-int userInputRange(int min, int max);
+long double userInputDoubleRange(long double min, long double max);
+int userInputIntRange(int min, int max);
 int userInputTime(int *dd, int *hr, int *min, int *sec);
 
 	//INLINE

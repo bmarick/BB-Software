@@ -10,13 +10,13 @@
 
 #include "socket.h"
 #include "helper.h"
+#include "testData.h"
 
-#include <stdint.h>
 #include <stdio.h>
 #include <time.h> 
 
 // FUNCTION
-int PressureTimedTest(time_t *end, uint16_t *goal, uint8_t *station);
-int PressureTest(uint16_t goal, uint8_t station);
+int PressureTimedTest(Test_Data *test_data);
+int PressureTest(Test_Data *test_data);
 
 #endif /* PRES_TEST_HEADER */

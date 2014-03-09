@@ -10,13 +10,14 @@
 
 #include "socket.h"
 #include "helper.h"
+#include "motorControl.h"
+#include "testData.h"
 
-#include <stdint.h>
 #include <stdio.h>
 #include <time.h> 
 
 // FUNCTION
-int DisplacementTimedTest(time_t *end, uint16_t *goal, uint8_t *station);
-int DisplacementTest(uint16_t goal, uint8_t station);
+int DisplacementTimedTest(Test_Data *test_data);
+int DisplacementTest(Test_Data *test_data);
 
 #endif /* DISP_TEST_HEADER */

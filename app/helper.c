@@ -28,7 +28,25 @@ int userConfrimRecursive(int count){
 	return userConfrimRecursive(++count);
 }
 
-int userInputRangeRecursive(int min, int max, int count){
+long double userInputDoubleRangeRecursive(long double min, long double max, long double count){
+	long double select;
+	int result; 
+
+	result = scanf(" %Lf",&select);
+	if((result > 0 && result != EOF) &&
+			select >= min    &&
+			select <= max){
+		return select;
+	} else if (count == INPUT_ATTEMPT_MAX -1){
+		println("\t\tWARNING: YOU HAVE ONLY ONE MORE ATTEMPT!");
+	} else if (count >= INPUT_ATTEMPT_MAX)
+		return -1;
+	println("You have supplied an invalid input.");
+	printf("Please enter your selection, agian: ");
+	return userInputDoubleRangeRecursive(min,max,++count); 
+}
+
+int userInputIntRangeRecursive(int min, int max, int count){
 	int select, result; 
 
 	result = scanf(" %d",&select);
@@ -42,7 +60,7 @@ int userInputRangeRecursive(int min, int max, int count){
 		return -1;
 	println("You have supplied an invalid input.");
 	printf("Please enter your selection, agian: ");
-	return userInputRangeRecursive(min,max,++count); 
+	return userInputIntRangeRecursive(min,max,++count); 
 }
 
 int userInputTimeRecursive(int *dd, int *hr, int *min, int *sec, int count){
@@ -85,8 +103,11 @@ int userConfrim(){
 	return userConfrimRecursive(INPUT_ATTEMPT_INIT);
 }
 
-int userInputRange(int min, int max){
-	return userInputRangeRecursive(min,max,INPUT_ATTEMPT_INIT);
+long double userInputDoubleRange(long double min, long double max){
+	return userInputDoubleRangeRecursive(min,max,INPUT_ATTEMPT_INIT);
+}
+int userInputIntRange(int min, int max){
+	return userInputIntRangeRecursive(min,max,INPUT_ATTEMPT_INIT);
 }
 
 int userInputTime(int *dd, int *hr, int *min, int *sec){

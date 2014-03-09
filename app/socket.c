@@ -5,26 +5,30 @@
 
 #include "socket.h"
 
-/* FUNCTION ==>> socketClose( *int);
+/* FUNCTION ==>> socketClose( *Test_Data);
  * Return Values:
  * Success:	0
  * Error:	-1 => Check errno
  */
-int socketClose(int *sockId){
-	return close(*sockId);
+int socketClose(Test_Data *test_data){
+	return close((*test_data).socketId);
 }
 
-/*  FUNCTION ==>> socketOpen( *int, int);
+/*  FUNCTION ==>> socketOpen( *Test_Data);
  *  Return Values: 
  *  Success: 	 0
  *  Error:	-1 => Unable to setup timeout
  *  Error: 	-2 => Unable to setup Socket, check errno
  *  Error:	-3 => Unable to bind Socket, check errno
  */
-int socketOpen(int *sockId, struct sockaddr_in *servaddr, int port){
+int socketOpen(Test_Data *test_data){
 	struct timeval timeOut;
-	int result;
+	int result, port , *sockId = &(*test_data).socketId;
+	struct sockaddr_in *servaddr = &(*test_data).servaddr;
 	
+	if((*test_data).station == STATION_A)	port = (int)PORT_A;
+	else					port = (int)PORT_B;
+
 	result = socket(AF_INET, SOCK_DGRAM,0);
 	if(result == -1)	return -2;
 	else			*sockId = result;
@@ -51,19 +55,19 @@ int socketOpen(int *sockId, struct sockaddr_in *servaddr, int port){
 	return 0;
 }
 
-/* FUNCTION ==>> socketRead( *int, *char, *int)
+/* FUNCTION ==>> socketRead( *Test_Data, *char)
  * Return Value:
  * Success:	Length of read
  * Error:	-1 => TIMEOUT
  * Error:	-2 => check errno
  */
-int socketRead(int *sockId, char *msg, int *length){
+int socketRead(Test_Data *test_data, char *msg){
 	struct sockaddr_in cliaddr;
 	socklen_t len;
-	int n;
+	int n, *sockId = &(*test_data).socketId;
 
 	len = sizeof(cliaddr);
-	n = recvfrom(*sockId,msg,*length,0,(struct sockaddr *)&cliaddr,&len);
+	n = recvfrom(*sockId,msg,MAX_LINE,0,(struct sockaddr *)&cliaddr,&len);
 	if(n>=0) {
          	msg[n] = 0;
 		return n;
@@ -76,11 +80,14 @@ int socketRead(int *sockId, char *msg, int *length){
 	}
 }
 
-/* FUNCTION ==>> socketSend( *int, struct *sockaddr_in, *char, *int)
+/* FUNCTION ==>> socketSend( *Test_Data, *char, *int)
  * Return Value:
  * Success:	Length of write
  * Error:	-1 => check errno
  */
-int socketSend(int *sockId, struct sockaddr_in *servaddr, char *msg, int *length){
+//int socketSend(int *sockId, struct sockaddr_in *servaddr, char *msg, int *length){
+int socketSend(Test_Data *test_data, char *msg, int *length){
+	int *sockId = &(*test_data).socketId;
+	struct sockaddr_in *servaddr = &(*test_data).servaddr;
 	return sendto(*sockId,msg,*length,0,(struct sockaddr *)servaddr,sizeof(*servaddr));
 }
