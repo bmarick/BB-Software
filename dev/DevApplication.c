@@ -90,8 +90,8 @@ int State_Motor(){
 	}
 
 	for(i=0; i<GPIO_PIN_COUNT;i++){
-		gpio_export(GPIO_D1[i]);
-	      	gpio_set_dir(GPIO_D1[i], OUTPUT_PIN);
+		gpio_export(pins[i]);
+	      	gpio_set_dir(pins[i], OUTPUT_PIN);
 	}
 
 	printf("Setting Motor to No Movement\n");
