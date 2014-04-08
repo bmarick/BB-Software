@@ -128,7 +128,7 @@ int State_Motor(){
 			prev = select;
 			printf("Setting motor in forward direction\n");
         		gpio_set_value(pins[1], HIGH);
-		        gpio_set_value(pins[3], HIGH);
+		        gpio_set_value(pins[5], HIGH);
 		}else if(select == 2){
 			prev = select;
 			printf("Stopping motor\n");
@@ -146,7 +146,7 @@ int State_Motor(){
 			prev = select;	
 			printf("Setting motor in reverse direction\n");
         		gpio_set_value(pins[1], HIGH);
-		        gpio_set_value(pins[5], HIGH);
+		        gpio_set_value(pins[3], HIGH);
 		}else 
 			break;
 	}

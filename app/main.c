@@ -19,10 +19,6 @@ int main(int argc, char *argv[]){
 		println("\t\tERROR: setting up socket");
 		return -1;
 	}
-	test_data.accept_min = (test_data.goal)*
-			(((long double)(100-test_data.error)/100));
-	test_data.accept_max = (test_data.goal)*
-			(((long double)(100+test_data.error)/100));
 	
 	motorAutomatic(test_data.station);
 		
@@ -40,6 +36,8 @@ int main(int argc, char *argv[]){
 			PressureTest(&test_data);
 	}
 	
+	motorManual(test_data.station);
+		
 	return 0; 
 }
 
@@ -48,7 +46,7 @@ void testInit(){
 	println("Select on of the following tests: ");
 	println("\t1) Pressure");
 	println("\t2) Displacement");
-	printf("Your Selection : ");
+	printf("Your Selection: ");
 	test_data.type = userInputIntRange(1,2);
 	// SET TEST VALUES
 	if(test_data.type == TEST_DISP) {
@@ -74,9 +72,13 @@ void testInit(){
 	printf("The current gear is[%d-%d]: ",GEAR_LOW,GEAR_HIGH);
 	test_data.gear = userInputIntRange(GEAR_LOW,GEAR_HIGH);
 	// ACCEPTABLE ERROR
-	println("\nSetting the Acceptable Error.");
+	println("\nSetting the Acceptable Error, in thousandths of a percentage.");
 	printf("Please enter the acceptable error[%d-%d]: ",ERROR_LOW,ERROR_HIGH);
 	test_data.error = userInputIntRange(ERROR_LOW,ERROR_HIGH);
+	test_data.accept_min = (test_data.goal)*
+			(((long double)(1000-test_data.error)/1000));
+	test_data.accept_max = (test_data.goal)*
+			(((long double)(1000+test_data.error)/1000));
 }
 
 int testConfirm(){
@@ -88,6 +90,8 @@ int testConfirm(){
 		println("\tTest type: Displacement");
 		printf("\tDesired displacement: %Lf\n",test_data.goal);
 	}
+	printf("\tAcceptable Min: %Lf\n",test_data.accept_min);
+	printf("\tAcceptable Max: %Lf\n",test_data.accept_max);
 	if(test_data.timer <= 0){ 
 		println("\tTest length: NOT SET!");
 	} else  {

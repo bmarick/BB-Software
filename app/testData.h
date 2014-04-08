@@ -11,7 +11,7 @@
 #include <netinet/in.h>
 
 const uint8_t		TEST_DISP = 2, TEST_PRES = 1;
-const uint8_t		ERROR_LOW = 0, ERROR_HIGH = 5;
+const uint8_t		ERROR_LOW = 0, ERROR_HIGH = 50;
 const uint8_t		GEAR_LOW = 1, GEAR_HIGH = 5;
 const uint8_t		STATION_A = 1, STATION_B = 2;
 const long double	PRESSURE_MAX = 2000, PRESSURE_MIN = 0;

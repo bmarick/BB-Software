@@ -8,8 +8,9 @@
 
 #define PRES_TEST_HEADER
 
-#include "socket.h"
 #include "helper.h"
+#include "motorControl.h"
+#include "socket.h"
 #include "testData.h"
 
 #include <stdio.h>

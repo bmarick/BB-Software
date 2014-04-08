@@ -7,7 +7,7 @@
 #include <errno.h>
 
 int main(int argc, char**argv){
-	int sockfd,n,port =32002,i;
+	int sockfd,n,port =32000,i;
 	long double d0 = 0, d1 =0, d2 =0, d3 =0;
 	struct sockaddr_in servaddr,cliaddr;
 	struct timeval timeout;

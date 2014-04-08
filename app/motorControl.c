@@ -66,26 +66,40 @@ void motorMove(int station, int direction, int gear){
 	}
 
 	if(station == STATION_A){
-		if(direction > 0 && (gear == 1 || gear == 3 || gear == 5)){
-       			gpio_set_value(GPIO_S1[1], HIGH);
-		        gpio_set_value(GPIO_S1[3], HIGH);
-		} else if(direction < 0 && (gear == 2 || gear == 4)){
-       			gpio_set_value(GPIO_S1[1], HIGH);
-		        gpio_set_value(GPIO_S1[3], HIGH);
+		if(gear == 1 || gear == 3 || gear == 5){
+			if(direction > 0){
+	       			gpio_set_value(GPIO_S1[1], HIGH);
+			        gpio_set_value(GPIO_S1[5], HIGH);
+			} else {
+	       			gpio_set_value(GPIO_S1[1], HIGH);
+			        gpio_set_value(GPIO_S1[3], HIGH);
+			}
 		} else {
-       			gpio_set_value(GPIO_S1[1], HIGH);
-		        gpio_set_value(GPIO_S1[5], HIGH);
+			if(direction > 0){
+	       			gpio_set_value(GPIO_S1[1], HIGH);
+			        gpio_set_value(GPIO_S1[3], HIGH);
+			} else {
+	       			gpio_set_value(GPIO_S1[1], HIGH);
+			        gpio_set_value(GPIO_S1[5], HIGH);
+			}
 		}
 	} else { 
-		if(direction > 0 && (gear == 1 || gear == 3 || gear == 5)){
-       			gpio_set_value(GPIO_S2[1], HIGH);
-		        gpio_set_value(GPIO_S2[3], HIGH);
-		} else if(direction < 0 && (gear == 2 || gear == 4)){
-       			gpio_set_value(GPIO_S2[1], HIGH);
-		        gpio_set_value(GPIO_S2[3], HIGH);
+		if(gear == 1 || gear == 3 || gear == 5){
+			if(direction > 0){
+	       			gpio_set_value(GPIO_S2[1], HIGH);
+			        gpio_set_value(GPIO_S2[5], HIGH);
+			} else {
+	       			gpio_set_value(GPIO_S2[1], HIGH);
+			        gpio_set_value(GPIO_S2[3], HIGH);
+			}
 		} else {
-       			gpio_set_value(GPIO_S2[1], HIGH);
-		        gpio_set_value(GPIO_S2[5], HIGH);
+			if(direction > 0){
+	       			gpio_set_value(GPIO_S2[1], HIGH);
+			        gpio_set_value(GPIO_S2[3], HIGH);
+			} else {
+	       			gpio_set_value(GPIO_S2[1], HIGH);
+			        gpio_set_value(GPIO_S2[5], HIGH);
+			}
 		}
 	}
 }
