@@ -4,10 +4,11 @@
  */
 
 #include "helper.h"
-#include "DispTest.h"
+//#include "DispTest.h"
 #include "motorControl.h"
-#include "PresTest.h"
+//#include "PresTest.h"
 #include "testData.h"
+#include "TestProcedure.h"
 
 #include <stdlib.h>
 #include <stdint.h>

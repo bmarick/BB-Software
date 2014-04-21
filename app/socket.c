@@ -26,9 +26,8 @@ int socketOpen(Test_Data *test_data){
 	int result, port , *sockId = &(*test_data).socketId;
 	struct sockaddr_in *servaddr = &(*test_data).servaddr;
 	
-	if((*test_data).station == STATION_A)	port = (int)PORT_A;
-	else					port = (int)PORT_B;
-
+	port = (int) (*test_data).station;
+	
 	result = socket(AF_INET, SOCK_DGRAM,0);
 	if(result == -1)	return -2;
 	else			*sockId = result;

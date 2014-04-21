@@ -56,17 +56,17 @@ void motorManual(int station){
 	}
 }
 
-void motorMove(int station, int direction, int gear){
+void motorMove(int station, int direction, int selector){
 	if(direction == 0){
 		motorHalt(station);
 		return;
-	} else if( gear < GEAR_LOW || gear > GEAR_HIGH){
+	} else if( selector < SELECTOR_LOW || selector > SELECTOR_HIGH){
 		printf("\t\tINVALID GEAR!!");
 		return;
 	}
 
 	if(station == STATION_A){
-		if(gear == 1 || gear == 3 || gear == 5){
+		if(selector == 1 || selector == 3 || selector == 5){
 			if(direction > 0){
 	       			gpio_set_value(GPIO_S1[1], HIGH);
 			        gpio_set_value(GPIO_S1[5], HIGH);
@@ -84,7 +84,7 @@ void motorMove(int station, int direction, int gear){
 			}
 		}
 	} else { 
-		if(gear == 1 || gear == 3 || gear == 5){
+		if(selector == 1 || selector == 3 || selector == 5){
 			if(direction > 0){
 	       			gpio_set_value(GPIO_S2[1], HIGH);
 			        gpio_set_value(GPIO_S2[5], HIGH);
