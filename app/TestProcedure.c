@@ -45,19 +45,19 @@ int TimedTest(Test_Data *test_data){
 				// Check if still in acceptable range
 				if(current >= accept_max){
 					prev_state = -1;
-					//motorMove((*test_data).station,prev_state,(*test_data).selector);
+					motorMove((*test_data).station,prev_state,(*test_data).selector);
 				} else if (current <= accept_min){
 					prev_state = 1;
-					//motorMove((*test_data).station,prev_state,(*test_data).selector);
+					motorMove((*test_data).station,prev_state,(*test_data).selector);
 				}
 			} else if (!test_pause_bool && prev_state > 0 && current >= goal){ // MOTOR UP & needs to Stop
 					prev_state = 0;
-					//motorHalt(station);
+					motorHalt(station);
 					test_pause_bool = true;
 					setTestTimeout(&test_pause_time);
 			} else if (!test_pause_bool && prev_state < 0 && current <= goal){ // MOTOR DOWN & needs to Stop
 					prev_state = 0;
-					//motorHalt(station);
+					motorHalt(station);
 					test_pause_bool = true;
 					setTestTimeout(&test_pause_time);
 			}
@@ -136,19 +136,19 @@ int NonTimedTest(Test_Data *test_data){
 				// Check if still in acceptable range
 				if(current >= accept_max){
 					prev_state = -1;
-					//motorMove((*test_data).station,prev_state,(*test_data).selector);
+					motorMove((*test_data).station,prev_state,(*test_data).selector);
 				} else if (current <= accept_min){
 					prev_state = 1;
-					//motorMove((*test_data).station,prev_state,(*test_data).selector);
+					motorMove((*test_data).station,prev_state,(*test_data).selector);
 				}
 			} else if (!test_pause_bool && prev_state > 0 && current >= goal){ // MOTOR UP & needs to Stop
 					prev_state = 0;
-					//motorHalt(station);
+					motorHalt(station);
 					test_pause_bool = true;
 					setTestTimeout(&test_pause_time);
 			} else if (!test_pause_bool && prev_state < 0 && current <= goal){ // MOTOR DOWN & needs to Stop
 					prev_state = 0;
-					//motorHalt(station);
+					motorHalt(station);
 					test_pause_bool = true;
 					setTestTimeout(&test_pause_time);
 			}

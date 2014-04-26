@@ -61,7 +61,7 @@ void testInit(){
 	println("\nSetting the length of the test.");
 	println("Input format 'Days':'hours':'minutes':'sec'");
 	println("To not set a length input: 0:0:0:0");
-	printf("Please enter desired test lenght,: ");
+	printf("Please enter desired test lenght: ");
 	test_data.timer = userInputTime(&TIME_DAYS,&TIME_HRS,&TIME_MIN,&TIME_SEC);
 	// SELECT TESTING STATION
 	println("\nSelect Testing Station.");
